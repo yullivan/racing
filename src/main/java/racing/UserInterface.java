@@ -12,33 +12,26 @@ public class UserInterface {
     }
 
     // 기능(목적): 입력; 개발자에게 사용자가 입력한 이름들을 전달
-    private static List<String> takeNamesInput() {
+    private static List<CarName> takeCarNamesInput() {
         List<String> names = List.of(scanner.nextLine().split(","));
-        validateNameLength(names); // 예외 발생 가능
 
-        return names;
+        return names.stream()
+                .map(name -> new CarName(name))
+                .toList();
     }
 
     // 기능(목적): 재입력
-    public static List<String> getNames() {
-        List<String> names = List.of();
+    public static List<CarName> getCarNames() {
+        List<CarName> names = List.of();
         while (names.isEmpty()) {
             try {
                 promptCarNames();
-                names = takeNamesInput();
+                names = takeCarNamesInput();
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
 
         return names;
-    }
-
-    private static void validateNameLength(List<String> names) {
-        for (String name : names) {
-            if (name.length() > 10) {
-                throw new IllegalArgumentException("[ERROR] 이름은 10자 이내");
-            }
-        }
     }
 }
