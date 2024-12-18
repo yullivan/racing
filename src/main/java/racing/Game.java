@@ -10,9 +10,9 @@ public class Game {
 
     public void run() {
         Cars cars = UserInterface.getCars();
-        int driveCount = 5;
+        DriveCount driveCount = UserInterface.getDriveCount();
 
-        for (int i = 0; i < driveCount; i++) {
+        for (int i = 0; i < driveCount.getCount(); i++) {
             cars.driveAll();
             UserInterface.printResult(cars);
         }

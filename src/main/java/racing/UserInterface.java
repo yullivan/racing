@@ -11,6 +11,10 @@ public class UserInterface {
         System.out.print("자동차 이름들을 입력하세요: ");
     }
 
+    private static void promptDriveCount() {
+        System.out.print("진행 횟수를 입력하세요: ");
+    }
+
     // 기능(목적): 입력; 개발자에게 사용자가 입력한 이름들을 전달
     private static List<CarName> takeCarNamesInput() {
         List<String> names = List.of(scanner.nextLine().split(","));
@@ -33,6 +37,25 @@ public class UserInterface {
         }
 
         return names;
+    }
+
+
+    private static DriveCount takeDriveCountInput() {
+        return new DriveCount(Integer.parseInt(scanner.nextLine()));
+    }
+
+    public static DriveCount getDriveCount() {
+        DriveCount driveCount = null;
+        while (driveCount == null) {
+            try {
+                promptDriveCount();
+                driveCount = takeDriveCountInput();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return driveCount;
     }
 
     public static void printResult(Cars cars) {
