@@ -4,15 +4,20 @@ import java.util.Objects;
 
 public class Car {
 
-    private String name;
+    private CarName name;
     private int distance;
 
     public Car(String name, int distance) {
+        this.name = new CarName(name);
+        this.distance = distance;
+    }
+
+    public Car(CarName name, int distance) {
         this.name = name;
         this.distance = distance;
     }
 
-    public String getName() {
+    public CarName getName() {
         return name;
     }
 

@@ -9,8 +9,19 @@ public class Game {
 
     public void run() {
         List<CarName> carNames = UserInterface.getCarNames();
+        List<Car> cars = carNames.stream()
+                .map(carName -> new Car(carName, 0))
+                .toList();
+        int driveCount = 10;
 
-        System.out.println("carNames = " + carNames);
+        for (int i = 0; i < driveCount; i++) {
+            for (Car car : cars) {
+                car.drive(getRandomNumber());
+            }
+            // 결과 보여주기
+        }
+
+        // 우승자 출력
     }
 
     public int getRandomNumber() {
