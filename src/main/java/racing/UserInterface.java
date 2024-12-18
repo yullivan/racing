@@ -7,21 +7,11 @@ public class UserInterface {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void promptCarNames() {
-        System.out.print("자동차 이름들을 입력하세요: ");
-    }
-
-    private static void promptDriveCount() {
-        System.out.print("진행 횟수를 입력하세요: ");
-    }
-
-    // 기능(목적): 입력; 개발자에게 사용자가 입력한 이름들을 전달
-    private static List<CarName> takeCarNamesInput() {
-        List<String> names = List.of(scanner.nextLine().split(","));
-
-        return names.stream()
-                .map(name -> new CarName(name))
-                .toList();
+    public static Cars getCars() {
+        List<CarName> carNames = getCarNames();
+        return new Cars(carNames.stream()
+                .map(carName -> new Car(carName, 0))
+                .toList());
     }
 
     // 기능(목적): 재입력
@@ -39,9 +29,17 @@ public class UserInterface {
         return names;
     }
 
+    // 기능(목적): 입력; 개발자에게 사용자가 입력한 이름들을 전달
+    private static List<CarName> takeCarNamesInput() {
+        List<String> names = List.of(scanner.nextLine().split(","));
 
-    private static DriveCount takeDriveCountInput() {
-        return new DriveCount(Integer.parseInt(scanner.nextLine()));
+        return names.stream()
+                .map(name -> new CarName(name))
+                .toList();
+    }
+
+    public static void promptCarNames() {
+        System.out.print("자동차 이름들을 입력하세요: ");
     }
 
     public static DriveCount getDriveCount() {
@@ -56,6 +54,14 @@ public class UserInterface {
         }
 
         return driveCount;
+    }
+
+    private static void promptDriveCount() {
+        System.out.print("진행 횟수를 입력하세요: ");
+    }
+
+    private static DriveCount takeDriveCountInput() {
+        return new DriveCount(Integer.parseInt(scanner.nextLine()));
     }
 
     public static void printResult(Cars cars) {
@@ -74,10 +80,4 @@ public class UserInterface {
         System.out.println(String.join(", ", names));
     }
 
-    public static Cars getCars() {
-        List<CarName> carNames = getCarNames();
-        return new Cars(carNames.stream()
-                .map(carName -> new Car(carName, 0))
-                .toList());
-    }
 }
