@@ -35,18 +35,26 @@ public class UserInterface {
         return names;
     }
 
-    public static void printResult(List<Car> cars) {
+    public static void printResult(Cars cars) {
         System.out.println("==========================");
-        for (Car car : cars) {
+        for (Car car : cars.getCars()) {
             System.out.println(car.getName().name() + ": " + "-".repeat(car.getDistance()));
         }
     }
 
-    public static void printWinners(List<Car> winners) {
+    public static void printWinners(Cars winners) {
         System.out.print("우승자: ");
-        List<String> names = winners.stream()
+        List<String> names = winners.getCars()
+                .stream()
                 .map(winner -> winner.getName().name())
                 .toList();
         System.out.println(String.join(", ", names));
+    }
+
+    public static Cars getCars() {
+        List<CarName> carNames = getCarNames();
+        return new Cars(carNames.stream()
+                .map(carName -> new Car(carName, 0))
+                .toList());
     }
 }

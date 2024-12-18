@@ -6,38 +6,34 @@ import java.util.Random;
 
 public class Game {
 
-    Random random = new Random();
+    private static Random random = new Random();
 
     public void run() {
-        List<CarName> carNames = UserInterface.getCarNames();
-        List<Car> cars = carNames.stream()
-                .map(carName -> new Car(carName, 0))
-                .toList();
-        int driveCount = 10;
+        Cars cars = UserInterface.getCars();
+        int driveCount = 5;
 
         for (int i = 0; i < driveCount; i++) {
-//            for (Car car : cars) {
-//                car.drive(getRandomNumber());
-//            }
-            driveAll(cars);
+            cars.driveAll();
             UserInterface.printResult(cars);
         }
 
         // 우승자 출력
-        List<Car> winners = getWinners(cars);
+        Cars winners = getWinners(cars);
         UserInterface.printWinners(winners);
     }
 
-    private List<Car> getWinners(List<Car> cars) {
-        List<Integer> distances = cars.stream()
+    private Cars getWinners(Cars cars) {
+        List<Integer> distances = cars.getCars()
+                .stream()
                 .map(car -> car.getDistance())
                 .toList();
 
         Integer maxDistance = Collections.max(distances);
 
-        return cars.stream()
+        return new Cars(cars.getCars()
+                .stream()
                 .filter(car -> car.getDistance() == maxDistance)
-                .toList();
+                .toList());
     }
 
     private void driveAll(List<Car> cars) {
@@ -46,7 +42,7 @@ public class Game {
         }
     }
 
-    public int getRandomNumber() {
+    public static int getRandomNumber() {
         return random.nextInt(6) + 1;
     }
 }
