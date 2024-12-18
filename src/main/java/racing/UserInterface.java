@@ -11,19 +11,34 @@ public class UserInterface {
         System.out.print("자동차 이름들을 입력하세요: ");
     }
 
-    public static List<String> getNames() {
+    // 기능(목적): 입력; 개발자에게 사용자가 입력한 이름들을 전달
+    private static List<String> takeNamesInput() {
         List<String> names = List.of(scanner.nextLine().split(","));
-        try {
-            for (String name : names) {
-                if (name.length() > 10) {
-                    throw new IllegalArgumentException("[ERROR] 이름은 10자 이내");
-                }
+        validateNameLength(names); // 예외 발생 가능
+
+        return names;
+    }
+
+    // 기능(목적): 재입력
+    public static List<String> getNames() {
+        List<String> names = List.of();
+        while (names.isEmpty()) {
+            try {
+                promptCarNames();
+                names = takeNamesInput();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            names = getNames();
         }
 
         return names;
+    }
+
+    private static void validateNameLength(List<String> names) {
+        for (String name : names) {
+            if (name.length() > 10) {
+                throw new IllegalArgumentException("[ERROR] 이름은 10자 이내");
+            }
+        }
     }
 }
